@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
     bool jumpJustPressed;
     bool jumpJustReleased;
     bool jumpready;
+    bool dashready;
+    bool dashdownready;
+
     [SerializeField] float jumpForce = 15f;
     [SerializeField] float gravityForce = 25f;
     [SerializeField] float horizontalVelocity = 10f;
@@ -88,6 +91,8 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             jumpready = true;
+            dashready = true;
+            dashdownready = true;
             body.linearVelocityY = 0f;
         }
         else
@@ -100,6 +105,17 @@ public class PlayerMovement : MonoBehaviour
                 {
                     body.linearVelocityY = gravityForce*-0.5f;
                 }
+                float direction2 = moveAction.ReadValue<Vector2>().x;
+                if (direction2 > 0 && !jumpready && dashdownready)
+                {
+                    body.linearVelocityX += jumpForce * 1f;
+                    dashdownready = false;
+                }
+                else if (direction2 < 0 && !jumpready && dashdownready)
+                {
+                    body.linearVelocityX -= jumpForce * 1f;
+                    dashdownready = false;
+                }
                 body.linearVelocityY -= gravityForce * Time.fixedDeltaTime;   
             }
         }
@@ -109,16 +125,34 @@ public class PlayerMovement : MonoBehaviour
             if (playerdir.walltouching == "left" && direction > 0)
             {
                 body.linearVelocityX += jumpForce * 1.5f;
-                body.linearVelocityY = jumpForce * 1f;
+                body.linearVelocityY = jumpForce * 1.1f;
             }
             else if (playerdir.walltouching == "right" && direction < 0)
             {
                 body.linearVelocityX -= jumpForce * 1.5f;
-                body.linearVelocityY = jumpForce * 1f;
+                body.linearVelocityY = jumpForce * 1.1f;
             }
             else if (playerdir.walltouching == "both")
             {
-                body.linearVelocityY = jumpForce * 1.25f;
+                body.linearVelocityY = jumpForce * 1.3f;
+            }
+            else
+            {
+                if (dashready)
+                {
+                    if (direction > 0)
+                    {
+                        body.linearVelocityX += jumpForce * 1.5f;
+                        body.linearVelocityY = jumpForce * 0.5f;
+                        dashready = false;
+                    }
+                    else if (direction < 0)
+                    {
+                        body.linearVelocityX -= jumpForce * 1.5f;
+                        body.linearVelocityY = jumpForce * 0.5f;
+                        dashready = false;
+                    }   
+                }
             }
         }
         if (jumpJustPressed && jumpready)

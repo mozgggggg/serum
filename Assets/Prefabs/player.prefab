@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8734187457196828780}
   - component: {fileID: 2109900570012168276}
   - component: {fileID: 2937089694767944856}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7232080055144637984}
@@ -114,7 +114,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0.5
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 08a7d39554dedcb48be574ed3ba9e7fa, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -184,6 +184,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   walltouching: 
+  playertouched: 0
+  dmgsrc: {fileID: 2937089694767944856}
 --- !u!114 &2109900570012168276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,7 +229,7 @@ GameObject:
   - component: {fileID: 472944920218292414}
   - component: {fileID: 2822043168085950444}
   - component: {fileID: 4171674471911886454}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +331,7 @@ GameObject:
   - component: {fileID: 5447831375529588910}
   - component: {fileID: 2918511476412172045}
   - component: {fileID: 1142045668030839654}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}

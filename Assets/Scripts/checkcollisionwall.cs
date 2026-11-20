@@ -1,12 +1,23 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class checkcollisionwall : MonoBehaviour
 {
     public string walltouching;
+    Rigidbody2D body;
+    public int playertouched = 0;
+
+    [SerializeField] HealthComponent dmgsrc;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
+    }
+
+    void Awake()
+    {
+        body = GetComponent<Rigidbody2D>();  
     }
 
     // Update is called once per frame
@@ -17,6 +28,7 @@ public class checkcollisionwall : MonoBehaviour
 
     void FixedUpdate()
     {
+        playertouched--;
         Vector3 parentPosition = transform.position;
         Collider2D hit = Physics2D.OverlapBox(
         parentPosition + new Vector3(-0.8f, 0, 0),  // Center of the box
@@ -47,7 +59,21 @@ public class checkcollisionwall : MonoBehaviour
                     walltouching = "both";
                 }
           }
+          
         }  
-    Debug.Log(walltouching);
+    Collider2D hitplr = Physics2D.OverlapBox(
+        parentPosition+ new Vector3(0,0,0),  // Center of the box
+        new Vector2(1.3f, 1.3f), // Width and height
+        0f                   // Rotation angle
+        );
+        if (hitplr != null)
+        {
+            if (hitplr.gameObject.layer == 6 && playertouched <= 0)
+            {
+                playertouched = 20;
+                var damage = (int)Mathf.Round(body.linearVelocity.magnitude);
+                dmgsrc.TakeDamage(damage);
+            }
+        }
     }
 }
